@@ -50,12 +50,27 @@
                 const updatedData = req.body;
                 const updateDoc = {
                             $set: {
-                                updatedData,
+                                quantity : updatedData.quantity,
                             },
                           };
                           const result = await serviceCollection.updateOne(filter, updateDoc, options);
-                          res.send(result);
-            });
+                          res.status(200).json(result);
+            })
+
+            // app.put('/services/:id',async(req,res)=>{
+            //     const id = req.params.id;
+            //     const updateQuantity = req.body;
+            //     const filter = { _id: ObjectId(id) };
+            //     const options = { upsert: true };
+            //     const updateDoc = {
+            //         $set: {
+                    
+            //         },
+            //       };
+            //     const result = await serviceCollection.updateOne(filter, updateDoc, options);
+            //     res.send(result);
+            // })
+
 
         }
         finally{}
