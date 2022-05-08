@@ -47,7 +47,7 @@
                 // console.log(newService)
                 const result = await serviceCollection.insertOne(newService);
                 res.send(result);
-            })
+            });
 
 
             app.put('/services/:id', async(req,res)=>{
@@ -55,7 +55,7 @@
                 const filter = {_id : ObjectId(id)};
                 const options = { upsert: true };
                 const updatedData = req.body;
-                console.log(updatedData);
+                // console.log(updatedData);
                 const updateDoc = {
                             $set: {
                                 quantity : updatedData.quantity,
@@ -63,9 +63,16 @@
                           };
                 const result = await serviceCollection.updateOne(filter, updateDoc, options);
                 res.status(200).json(result);
-            })
+            });
 
-            
+            app.get('/services',async(req,res)=>{
+                const email = req.query.email;
+                console.log(email)
+                const query = {email:email};
+                const cursor =  serviceCollection.find(query);
+                const item = await cursor.toArray();
+                res.send(item);
+            });
 
 
         }
