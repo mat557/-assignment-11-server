@@ -42,34 +42,30 @@
                 res.send(result);
             });
 
+            app.post('/services',async(req,res)=>{
+                const newService = req.body;
+                // console.log(newService)
+                const result = await serviceCollection.insertOne(newService);
+                res.send(result);
+            })
+
 
             app.put('/services/:id', async(req,res)=>{
                 const id = req.params.id;
                 const filter = {_id : ObjectId(id)};
                 const options = { upsert: true };
                 const updatedData = req.body;
+                console.log(updatedData);
                 const updateDoc = {
                             $set: {
                                 quantity : updatedData.quantity,
                             },
                           };
-                          const result = await serviceCollection.updateOne(filter, updateDoc, options);
-                          res.status(200).json(result);
+                const result = await serviceCollection.updateOne(filter, updateDoc, options);
+                res.status(200).json(result);
             })
 
-            // app.put('/services/:id',async(req,res)=>{
-            //     const id = req.params.id;
-            //     const updateQuantity = req.body;
-            //     const filter = { _id: ObjectId(id) };
-            //     const options = { upsert: true };
-            //     const updateDoc = {
-            //         $set: {
-                    
-            //         },
-            //       };
-            //     const result = await serviceCollection.updateOne(filter, updateDoc, options);
-            //     res.send(result);
-            // })
+            
 
 
         }
